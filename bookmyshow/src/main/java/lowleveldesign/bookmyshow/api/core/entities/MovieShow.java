@@ -42,7 +42,7 @@ public class MovieShow extends BaseAbstractAuditableEntity {
     @JoinColumn(name = "auditorium_id", nullable = false)
     private Auditorium auditorium;
 
-    @OneToMany(mappedBy = "show", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "movieShow", cascade = CascadeType.ALL)
     private Set<Booking> bookings;
 
     @ManyToOne

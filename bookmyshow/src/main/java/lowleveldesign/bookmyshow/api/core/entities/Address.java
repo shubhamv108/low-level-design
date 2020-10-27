@@ -8,6 +8,8 @@ import lowleveldesign.bookmyshow.api.core.entities.address.PinCode;
 import lowleveldesign.bookmyshow.api.core.entities.base.BaseAbstractAuditableEntity;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Builder
@@ -26,6 +28,9 @@ public class Address extends BaseAbstractAuditableEntity {
     private String streetName;
     private String areaName;
     private String city;
+
+    @ManyToOne
+    @JoinColumn(name = "pin_code_id", nullable = false)
     private PinCode pincode;
 
 }

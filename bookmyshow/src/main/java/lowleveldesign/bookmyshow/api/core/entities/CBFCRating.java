@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Builder
@@ -17,6 +20,10 @@ import javax.persistence.Table;
 @Table(name = "cbfc_ratings")
 @org.hibernate.annotations.Table(appliesTo = "cbfc_ratings", comment = "Central Board of Film Certification ratings")
 public class CBFCRating {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Column(unique = true, nullable = false)
     private String certificationId;

@@ -31,11 +31,15 @@ public class Booking extends BaseAbstractAuditableEntity {
 
     @ManyToOne
     @JoinColumn(name = "movie_show", nullable = false)
-    private MovieShow show;
+    private MovieShow movieShow;
 
     @ManyToOne
     @JoinColumn(name = "coupon_id")
     private Coupon coupon;
+
+    @ManyToOne
+    @JoinColumn(name = "booking_viewer", referencedColumnName = "id", nullable = false)
+    private User bookingViewer;
 
     public int seatCount() {
         return this.showSeats.size();

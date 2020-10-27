@@ -23,7 +23,7 @@ import java.util.Date;
 @Table(name = "coupons")
 public class Coupon extends BaseAbstractAuditableEntity {
 
-    @Column(name = "coupon_name", nullable = false)
+    @Column(name = "coupon_code", nullable = false)
     private String code;
 
     private Double discountAmount;

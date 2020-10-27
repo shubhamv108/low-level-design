@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lowleveldesign.bookmyshow.api.core.entities.base.BaseAbstractAuditableEntity;
 import org.hibernate.annotations.NaturalId;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
