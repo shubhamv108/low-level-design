@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS friends (person_id uuid, friend_id uuid, friend_name text, friend_thumbnail_url text, PRIMARY KEY (person_id));
