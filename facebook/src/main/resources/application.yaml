@@ -6,8 +6,15 @@ server:
 logging:
   file: logs/facebook.log
   level:
-    org.springframework.web: DEBUG
-    guru.springframework.controllers: DEBUG
+    #org.springframework.web: DEBUG
+#    guru.springframework.controllers: DEBUG
+    org:
+      springframework:
+        data:
+          cassandra:
+            core:
+              cql:
+                CqlTemplate: DEBUG
     org.hibernate: DEBUG
 
 #  pattern:

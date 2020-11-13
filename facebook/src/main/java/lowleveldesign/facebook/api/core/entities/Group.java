@@ -1,10 +1,9 @@
 package lowleveldesign.facebook.api.core.entities;
 
-import lombok.Data;
 import lowleveldesign.facebook.api.core.entities.userdefinedtypes.location.Address;
+import lowleveldesign.facebook.api.core.entities.userdefinedtypes.group.GroupAdmin;
+import lowleveldesign.facebook.api.core.entities.userdefinedtypes.group.GroupMember;
 import lowleveldesign.facebook.api.core.entities.userdefinedtypes.location.Location;
-import lowleveldesign.facebook.api.core.entities.userdefinedtypes.page.Follower;
-import lowleveldesign.facebook.api.core.entities.userdefinedtypes.page.PageAdmin;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.Column;
@@ -14,9 +13,8 @@ import org.springframework.data.cassandra.core.mapping.Table;
 import java.util.Set;
 import java.util.UUID;
 
-@Data
-@Table("pages")
-public class Page {
+@Table("groups")
+public class Group {
 
     @PrimaryKeyColumn(name = "entity_id", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
     @CassandraType(type = CassandraType.Name.UUID)
@@ -24,37 +22,37 @@ public class Page {
 
     @PrimaryKeyColumn(name = "entity_name", ordinal = 0, type = PrimaryKeyType.CLUSTERED)
     @Column("entity_name")
-    private String entityName; // equivalent of username
+    private String entityName;
 
-    @Column("page_name")
+    @Column("group_name")
     private String name;
 
-    @Column("page_avatar_url")
+    @Column("group_avatar_url")
     private String avatarUrl;
 
-    @Column("page_background_url")
+    @Column("group_background_url")
     private String backgroundUrl;
 
-    @Column("page_thumbnail_url")
+    @Column("group_thumbnail_url")
     private String thumbnailUrl;
 
-    @Column("page_summary")
+    @Column("group_summary")
     private String summary;
 
-    @CassandraType( userTypeName = "page_admin_type", type = CassandraType.Name.UDT)
-    @Column("page_admins")
-    private Set<PageAdmin> admins;
+    @CassandraType(userTypeName = "group_admin_type", type = CassandraType.Name.UDT)
+    @Column("group_admins")
+    private Set<GroupAdmin> admins;
 
-    @CassandraType(userTypeName = "follower_type", type = CassandraType.Name.UDT)
-    @Column("followers")
-    private Set<Follower> followers;
+    @CassandraType(userTypeName = "group_member_type", type = CassandraType.Name.UDT)
+    @Column("group_members")
+    private Set<GroupMember> members;
 
     @CassandraType(userTypeName = "location_type", type = CassandraType.Name.UDT)
-    @Column("page_location")
+    @Column("group_location")
     private Location location;
 
     @CassandraType(userTypeName = "address_type", type = CassandraType.Name.UDT)
-    @Column("page_address")
+    @Column("group_address")
     private Address address;
 
 }

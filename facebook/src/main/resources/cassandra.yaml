@@ -5,10 +5,11 @@ spring:
       keyspace-name: facebook
       port: 9042
       contact-points:
-        - datacenter1
+        - 127.0.0.1
       connect-timeout-millis: 10000ms
       read-timeout-millis: 10000ms
       connect-timeout: 10000ms
       read-timeout: 10000ms
       pool.pool-timeout: 10000ms
-      write-timeout-millis: 10000ms  # only for development
+      consistency-level: quorum
+      serial-consistency-level: quorum

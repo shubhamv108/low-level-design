@@ -1,4 +1,4 @@
-package lowleveldesign.facebook.api.core.entities.repositories;
+package lowleveldesign.facebook.api.core.repositories;
 
 import lowleveldesign.facebook.api.core.entities.Person;
 import org.springframework.data.cassandra.repository.CassandraRepository;

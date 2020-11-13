@@ -37,19 +37,6 @@ public class CassandraConfiguration extends AbstractCassandraConfiguration {
                 .withSimpleReplication());
     }
 
-    /*
-     * Creating keyspace if does not exists
-     */
-//    @Override
-//    protected List<String> getStartupScripts() {
-//        return Collections.singletonList("CREATE KEYSPACE IF NOT EXISTS "
-//                + keyspaceName + " WITH replication = {"
-//                + " 'class': 'SimpleStrategy', "
-//                + " 'replication_factor': '1' "
-//                + "};");
-//
-//    }
-
     @Override
     protected String getLocalDataCenter() {
         return "datacenter1";
