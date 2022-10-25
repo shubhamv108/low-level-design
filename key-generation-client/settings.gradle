@@ -1,0 +1,11 @@
+rootProject.name = 'key-generation-client'
+
+
+include 'common-models'
+project(':common-models').projectDir = file('../common-models')
+include 'common-client'
+project(':common-client').projectDir = file('../common-client')
+
+include 'common-exceptions'
+project(':common-exceptions').projectDir = file('../common-exceptions')
+

@@ -1,0 +1,8 @@
+rootProject.name = 'configuration'
+
+include 'commons'
+project(':commons').projectDir = file('../commons')
+include 'common-exceptions'
+project(':common-exceptions').projectDir = file('../common-exceptions')
+include 'common-models'
+project(':common-models').projectDir = file('../common-models')

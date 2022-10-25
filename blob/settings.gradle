@@ -1,0 +1,17 @@
+rootProject.name = 'blob'
+
+include 'commons'
+project(':commons').projectDir = file('../commons')
+include 'authorization-client'
+project(':authorization-client').projectDir = file('../authorization-client')
+include 'authorization-models'
+project(':authorization-models').projectDir = file('../authorization-models')
+include 'common-exceptions'
+project(':common-exceptions').projectDir = file('../common-exceptions')
+include 'common-models'
+project(':common-models').projectDir = file('../common-models')
+
+include 'common-client'
+project(':common-client').projectDir = file('../common-client')
+include 'blob-models'
+project(':blob-models').projectDir = file('../blob-models')

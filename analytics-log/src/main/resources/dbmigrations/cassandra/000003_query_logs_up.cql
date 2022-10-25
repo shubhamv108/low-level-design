@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS query_logs (query text, timestamp date, PRIMARY KEY (query)) WITH CLUSTERING ORDER BY (timestamp ASC);

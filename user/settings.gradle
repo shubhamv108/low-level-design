@@ -1,0 +1,13 @@
+rootProject.name = 'user'
+
+include 'commons'
+project(':commons').projectDir = file('../commons')
+
+include 'common-models'
+project(':common-models').projectDir = file('../common-models')
+
+include 'authorization-models'
+project(':authorization-models').projectDir = file('../authorization-models')
+
+include 'common-exceptions'
+project(':common-exceptions').projectDir = file('../common-exceptions')

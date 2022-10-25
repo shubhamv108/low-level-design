@@ -1,0 +1,4 @@
+rootProject.name = 'pastebin-models'
+
+include 'common-models'
+project(':common-models').projectDir = file('../common-models')

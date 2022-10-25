@@ -1,0 +1,28 @@
+rootProject.name = 'pastebin'
+
+include 'commons'
+project(':commons').projectDir = file('../commons')
+
+include 'common-models'
+project(':common-models').projectDir = file('../common-models')
+
+include 'common-client'
+project(':common-client').projectDir = file('../common-client')
+
+include 'authorization-models'
+project(':authorization-models').projectDir = file('../authorization-models')
+
+include 'common-exceptions'
+project(':common-exceptions').projectDir = file('../common-exceptions')
+
+include 'blob-models'
+project(':blob-models').projectDir = file('../blob-models')
+
+include 'blob-client'
+project(':blob-client').projectDir = file('../blob-client')
+
+include 'key-generation-client'
+project(':key-generation-client').projectDir = file('../key-generation-client')
+
+include 'pastebin-models'
+project(':pastebin-models').projectDir = file('../pastebin-models')

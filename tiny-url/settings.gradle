@@ -1,0 +1,20 @@
+rootProject.name = 'tiny-url'
+
+include 'commons'
+project(':commons').projectDir = file('../commons')
+
+include 'common-models'
+project(':common-models').projectDir = file('../common-models')
+
+include 'common-client'
+project(':common-client').projectDir = file('../common-client')
+
+include 'authorization-models'
+project(':authorization-models').projectDir = file('../authorization-models')
+
+include 'common-exceptions'
+project(':common-exceptions').projectDir = file('../common-exceptions')
+
+include 'key-generation-client'
+project(':key-generation-client').projectDir = file('../key-generation-client')
+
