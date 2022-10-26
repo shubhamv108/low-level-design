@@ -12,10 +12,14 @@ import code.shubham.common.utils.StringUtils;
 import code.shubham.models.authentication.Login;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
@@ -42,7 +46,8 @@ public class AuthenticationService {
                                  final PasswordEncoder passwordEncoder,
                                  final SecurityProperties securityProperties,
                                  final SessionService sessionService,
-                                 final AccessTokenStrategy accessTokenStrategy) {
+                                 @Qualifier("JWTAccessTokenStrategy")
+                                     final AccessTokenStrategy accessTokenStrategy) {
         this.accountService = accountService;
         this.cryptoService = cryptoService;
         this.passwordEncoder = passwordEncoder;
@@ -73,9 +78,19 @@ public class AuthenticationService {
         Calendar calendar = Calendar.getInstance();
         Date expirationDate = this.securityProperties.generateExpirationDate(calendar);
         log.info("Expiration Date for the auth token {}", expirationDate.toString());
-        Login.Response response = this.accessTokenStrategy.prepareLoginResponse(
-                account.getUsername(), expirationDate);
-        this.sessionService.create(account.getId(), response.getAccessToken(), expirationDate);
-        return response;
+        return this.accessTokenStrategy.prepareLoginResponse(account, expirationDate);
+    }
+
+    public Integer authenticate(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            return this.accessTokenStrategy.validate(request, response);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean logout(Integer userId, String token) {
+        UserAccount account = this.accountService.findById(userId).get();
+        return this.accessTokenStrategy.logout(account, token);
     }
 }

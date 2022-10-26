@@ -1,12 +1,8 @@
 package code.shubham.authentication.filters;
 
-import code.shubham.authentication.configuration.SecurityProperties;
 import code.shubham.authentication.service.strategies.JWTAccessTokenStrategy;
-import code.shubham.authentication.utils.JWTUtils;
-import code.shubham.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;

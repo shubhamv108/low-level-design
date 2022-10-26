@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Service
 public class SessionService {
@@ -31,7 +32,15 @@ public class SessionService {
         return this.repository.save(session);
     }
 
+    public Optional<Session> findByUserIdAndToken(Integer userId, String token) {
+        return this.repository.findByUserIdAndToken(userId, token);
+    }
+
     public Session findOneByToken(String token) {
         return this.repository.findOneByToken(token);
+    }
+
+    public void deleteByUserIdAndToken(Integer userId, String token) {
+        this.repository.deleteByUserIdAndToken(userId, token);
     }
 }

@@ -1,8 +1,10 @@
 package code.shubham.authentication.service.strategies;
 
 import code.shubham.authentication.configuration.SecurityProperties;
-import code.shubham.authentication.constants.AuthenticationConstants;
 import code.shubham.authentication.dao.entities.UserAccount;
+import code.shubham.authentication.dao.service.AccountService;
+import code.shubham.authentication.dao.service.BlacklistTokenService;
+import code.shubham.authentication.utils.AccessTokenUtil;
 import code.shubham.authentication.utils.JWTUtils;
 import code.shubham.common.utils.StringUtils;
 import code.shubham.models.authentication.Login;
@@ -22,32 +24,44 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
-@Component
+@Component("JWTAccessTokenStrategy")
 public class JWTAccessTokenStrategy implements AccessTokenStrategy {
 
     private final JWTUtils jwtUtils;
     private final SecurityProperties securityProperties;
 
+    private final AccessTokenUtil accessTokenUtil;
+
+    private final BlacklistTokenService blacklistTokenService;
+
+    private final AccountService accountService;
+
     @Autowired
     public JWTAccessTokenStrategy(final JWTUtils jwtUtils,
-                                  final SecurityProperties securityProperties) {
+                                  final SecurityProperties securityProperties,
+                                  final AccessTokenUtil accessTokenUtil,
+                                  final BlacklistTokenService blacklistTokenService,
+                                  final AccountService accountService) {
         this.jwtUtils = jwtUtils;
         this.securityProperties = securityProperties;
+        this.accessTokenUtil = accessTokenUtil;
+        this.blacklistTokenService = blacklistTokenService;
+        this.accountService = accountService;
     }
 
     @Override
-    public Login.Response prepareLoginResponse(String userName, Date expirationDate) {
+    public Login.Response prepareLoginResponse(UserAccount userAccount, Date expirationDate) {
         int generatedRandomNumber = this.jwtUtils.generateRandomNumber();
         String generatedUTID      = this.jwtUtils.prepareUTID(generatedRandomNumber);
         String jti                = this.jwtUtils.generateJti();
         String secret             = this.securityProperties.getSecret().get(generatedRandomNumber);
 //        Role role = user.getRoles().stream().findFirst().get();
         String accessToken        = this.jwtUtils.generateAccessToken(
-                userName, null, generatedUTID, jti, expirationDate, secret, null);
-
+                userAccount.getUsername(), null, generatedUTID, jti, expirationDate, secret, null);
         return Login.Response.builder().
-                username(userName).
+                username(userAccount.getUsername()).
                 accessToken(accessToken).
                 jti(jti).
                 utid(generatedUTID).
@@ -56,21 +70,21 @@ public class JWTAccessTokenStrategy implements AccessTokenStrategy {
     }
 
     @Override
-    public boolean validate(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public Integer validate(HttpServletRequest request, HttpServletResponse response) throws IOException {
         this.setResponseHeaders(response);
         if (request.getMethod().equalsIgnoreCase("OPTIONS")) {
-            return true;
+            return null;
         }
 
         String utid = request.getHeader(this.securityProperties.getUtid());
         if (StringUtils.isEmpty(utid)) {
-            setErrorResponse(401, this.securityProperties.getFailureMessage(), response);
-            return false;
+            this.accessTokenUtil.setErrorResponse(401, this.securityProperties.getFailureMessage(), response);
+            return null;
         }
 
         String utidData = this.jwtUtils.getUTID(utid);
         if (Objects.isNull(utidData)) {
-            setErrorResponse(HttpStatus.UNAUTHORIZED.value(), this.securityProperties.getFailureMessage(), response);
+            this.accessTokenUtil.setErrorResponse(HttpStatus.UNAUTHORIZED.value(), this.securityProperties.getFailureMessage(), response);
         }
 
         int secret_Key_id = -1;
@@ -81,32 +95,39 @@ public class JWTAccessTokenStrategy implements AccessTokenStrategy {
         }
 
         if (secret_Key_id == -1 || secret_Key_id > this.securityProperties.getSecret().size()) {
-            this.setErrorResponse(HttpStatus.UNAUTHORIZED.value(), this.securityProperties.getFailureMessage(), response);
+            this.accessTokenUtil.setErrorResponse(HttpStatus.UNAUTHORIZED.value(), this.securityProperties.getFailureMessage(), response);
         }
 
         String secret = this.securityProperties.getSecret().get(secret_Key_id);
 
-        String accessToken = this.accessToken(request, response);
+        String accessToken = this.accessTokenUtil.accessToken(request, response);
         if (StringUtils.isEmpty(accessToken))
-            return false;
+            return null;
 
         Claims claims = this.jwtUtils.getClaimsFromAccessToken(accessToken, secret);
         if (claims == null) {
-            this.setErrorResponse(HttpStatus.UNAUTHORIZED.value(), this.securityProperties.getFailureMessage(), response);
-            return false;
+            this.accessTokenUtil.setErrorResponse(HttpStatus.UNAUTHORIZED.value(), this.securityProperties.getFailureMessage(), response);
+            return null;
+        }
+
+        String username = claims.getSubject();
+        /** Remove this check */
+        if (this.blacklistTokenService.contains(username, accessToken)) {
+            this.accessTokenUtil.setErrorResponse(HttpStatus.UNAUTHORIZED.value(), this.securityProperties.getFailureMessage(), response);
+            return null;
         }
 
         if (!this.jwtUtils.validateExpirationDate(claims)) {
-            this.setErrorResponse(HttpStatus.UNAUTHORIZED.value(), this.securityProperties.getFailureMessage(), response);
-            return false;
+            this.accessTokenUtil.setErrorResponse(HttpStatus.UNAUTHORIZED.value(), this.securityProperties.getFailureMessage(), response);
+            return null;
         }
 
 //        String role          = (String) claims.get("role");
         String remoteAddress = (String) claims.get("remoteAddress");
         if (StringUtils.isNotEmpty(remoteAddress)) {
             if (!StringUtils.isEquals(remoteAddress, request.getRemoteAddr())) {
-                this.setErrorResponse(HttpStatus.FORBIDDEN.value(), this.securityProperties.getFailureMessage(), response);
-                return false;
+                this.accessTokenUtil.setErrorResponse(HttpStatus.FORBIDDEN.value(), this.securityProperties.getFailureMessage(), response);
+                return null;
             }
         }
 
@@ -115,7 +136,7 @@ public class JWTAccessTokenStrategy implements AccessTokenStrategy {
 //        authorities.add(authority);
 
         UserAccount userAccount = UserAccount.builder().
-                username(claims.getSubject()).
+                username(username).
                 authorities(authorities).
                 build();
 
@@ -126,27 +147,12 @@ public class JWTAccessTokenStrategy implements AccessTokenStrategy {
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         }
 
-        return true;
-    }
-
-    private String accessToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String headerAuth = headerAuth(request, response);
-        if (StringUtils.isEmpty(headerAuth) || headerAuth.length() < 7) {
-            this.setErrorResponse(HttpStatus.UNAUTHORIZED.value(), this.securityProperties.getFailureMessage(), response);
+        Optional<UserAccount> userAccountOptional = this.accountService.findByUsername(username);
+        if (userAccountOptional.isEmpty()) {
+            this.accessTokenUtil.setErrorResponse(HttpStatus.UNAUTHORIZED.value(), this.securityProperties.getFailureMessage(), response);
             return null;
         }
-        return headerAuth.substring(7);
-    }
-
-    private String headerAuth(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String headerAuth = request.getHeader(this.securityProperties.getAccessToken());
-
-        if (StringUtils.isEmpty(headerAuth) || "null".equals(headerAuth)
-                || !headerAuth.startsWith(this.securityProperties.getTokenType())) {
-            this.setErrorResponse(401, this.securityProperties.getFailureMessage(), response);
-            return null;
-        }
-        return headerAuth;
+        return userAccountOptional.get().getId();
     }
 
     private void setResponseHeaders(HttpServletResponse response) {
@@ -157,9 +163,8 @@ public class JWTAccessTokenStrategy implements AccessTokenStrategy {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
     }
 
-    private void setErrorResponse(int code, String msg, HttpServletResponse response) throws IOException {
-        response.setContentType("application/json");
-        response.getWriter().write(String.format("{\"status\":\"" + code + "\",\"message\":\" %s \"}", msg));
-        response.setStatus(code);
+    @Override
+    public boolean logout(UserAccount user, String token) {
+        return this.blacklistTokenService.add(user.getUsername(), token) != null;
     }
 }

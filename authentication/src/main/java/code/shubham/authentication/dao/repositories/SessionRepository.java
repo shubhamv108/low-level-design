@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SessionRepository extends JpaRepository<Session, Integer> {
@@ -35,4 +36,11 @@ public interface SessionRepository extends JpaRepository<Session, Integer> {
 
     @Query(value = "select * from session where token = ?1 and 1=1", nativeQuery = true)
     Session findOneByToken(String token);
+
+    Optional<Session> findByUserIdAndToken(Integer userId, String token);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from session where user_id = ? and token = ?", nativeQuery = true)
+    void deleteByUserIdAndToken(Integer userId, String token);
 }

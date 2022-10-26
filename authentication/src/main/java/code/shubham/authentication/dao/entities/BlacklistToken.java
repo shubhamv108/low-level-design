@@ -1,9 +1,9 @@
 package code.shubham.authentication.dao.entities;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
@@ -12,38 +12,24 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
-import java.util.Date;
 
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "sessions", uniqueConstraints = {
-        @UniqueConstraint(columnNames = { "userId", "token" })
+@Table(name = "blacklist_tokens", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"username", "token"})
 })
-public class Session {
+public class BlacklistToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
-    private Integer userId;
+    private String username;
 
-    @Column(nullable = false, length = 256)
+    @Column(unique = true, nullable = false)
     private String token;
-
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
-    private Date createdOn;
-
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false)
-    private Date expiryAt;
 }
