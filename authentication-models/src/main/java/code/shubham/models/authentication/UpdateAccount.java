@@ -6,7 +6,7 @@ import lombok.Getter;
 public class UpdateAccount {
 
     @Getter
-    public class Request {
+    public static class Request {
         Integer userId;
     }
 }

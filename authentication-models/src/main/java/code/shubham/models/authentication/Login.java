@@ -11,14 +11,14 @@ import java.util.Collection;
 public class Login {
 
     @Getter
-    public class Request {
+    public static class Request {
         private String username;
         private String password;
     }
 
     @Builder
     @Data
-    public class Response {
+    public static class Response {
         private String utid;
         private String jti;
         private String accessToken;

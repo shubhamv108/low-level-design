@@ -1,10 +1,13 @@
 package code.shubham.authentication.dao.service;
 
-import code.shubham.authentication.dao.entities.Key;
+import code.shubham.authentication.dao.entities.KeyStore;
 import code.shubham.authentication.dao.repositories.KeyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * Move to key-store micro-service
+ */
 @Service
 public class KeyDAOService {
 
@@ -22,8 +25,8 @@ public class KeyDAOService {
      * @return the encryption key
      */
     public byte[] getPublicKey(String keyType) {
-        Key key = this.repository.findByPurpose(keyType);
-        return key.getPublicKey().getEncoded();
+        KeyStore keyStore = this.repository.findByPurpose(keyType);
+        return keyStore.getPublicKey().getEncoded();
     }
 
     /**
@@ -33,8 +36,13 @@ public class KeyDAOService {
      * @return the private key
      */
     public byte[] getPrivateKey(String keyType) {
-        Key key = this.repository.findByPurpose(keyType);
-        return key.getPrivateKey().getEncoded();
+        KeyStore keyStore = this.repository.findByPurpose(keyType);
+        return keyStore.getPrivateKey().getEncoded();
+    }
+
+    public byte[] getSecretKey(String keyType) {
+        KeyStore keyStore = this.repository.findByPurpose(keyType);
+        return keyStore.getSecretKey().getEncoded();
     }
 }
 

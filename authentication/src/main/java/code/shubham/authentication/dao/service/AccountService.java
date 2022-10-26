@@ -1,8 +1,7 @@
 package code.shubham.authentication.dao.service;
 
-import code.shubham.authentication.dao.entities.AuthenticationAccount;
+import code.shubham.authentication.dao.entities.UserAccount;
 import code.shubham.authentication.dao.repositories.AccountRepository;
-import code.shubham.common.exceptions.InvalidRequestException;
 import code.shubham.models.authentication.CreateAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,30 +18,19 @@ public class AccountService {
         this.repository = repository;
     }
 
-    public AuthenticationAccount create(CreateAccount.Request request, String encodedPassword, Integer userId) {
-        AuthenticationAccount authenticationAccount = AuthenticationAccount.builder().
-                name(request.getUserName()).
+    public UserAccount create(CreateAccount.Request request, String encodedPassword) {
+        UserAccount userAccount = UserAccount.builder().
+                username(request.getUserName()).
                 password(encodedPassword).
-                userId(userId).
                 build();
-        return this.save(authenticationAccount);
+        return this.save(userAccount);
     }
 
-    public AuthenticationAccount save(AuthenticationAccount authenticationAccount) {
-        return this.repository.save(authenticationAccount);
+    public UserAccount save(UserAccount userAccount) {
+        return this.repository.save(userAccount);
     }
 
-    public Optional<AuthenticationAccount> fndByUsername(String username) {
+    public Optional<UserAccount> findByUsername(String username) {
         return this.repository.findByUsername(username);
-    }
-
-    public AuthenticationAccount setUserId(String username, Integer userId) {
-        Optional<AuthenticationAccount> accountOptional = this.repository.findByUsername(username);
-        if (!accountOptional.isEmpty())
-            throw new InvalidRequestException("username", "Invalid username. Not Found");
-
-        AuthenticationAccount account = accountOptional.get();
-        account.setUserId(userId);
-        return this.repository.save(account);
     }
 }

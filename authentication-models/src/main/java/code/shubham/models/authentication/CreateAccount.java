@@ -7,14 +7,14 @@ import lombok.Getter;
 public class CreateAccount {
 
     @Getter
-    public class Request {
+    public static class Request {
         private String userName;
         private String password;
     }
 
     @Builder
     @Data
-    public class Response {
+    public static class Response {
         String username;
     }
 }

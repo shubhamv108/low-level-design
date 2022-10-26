@@ -41,6 +41,7 @@ public class CryptoService {
 
         {
             put(AuthenticationConstants.AUTH_TYPE_PASSWORD, AuthenticationConstants.DB_PASSWORD_ENCRYPTION_KEY);
+            put(AuthenticationConstants.AUTH_TYPE_ACCESS_TOKEN, AuthenticationConstants.DB_ACCESS_TOKEN_ENCRYPTION_KEY);
         }
     };
 
@@ -48,6 +49,17 @@ public class CryptoService {
         this.keyDAOService = keyDAOService;
     }
 
+    public String encryptUsingSecretKey(String dataValue, String authType) {
+        String encryptionKey = authTypeEncryptionKeyMap.get(authType);
+        byte[] secretKey = this.keyDAOService.getSecretKey(encryptionKey);
+        return new String(CryptoUtil.encryptUsingSecretKey(secretKey, dataValue.getBytes()));
+    }
+
+    public String decryptUsingSecretKey(String dataValue, String authType) {
+        String encryptionKey = authTypeEncryptionKeyMap.get(authType);
+        byte[] secretKey = this.keyDAOService.getSecretKey(encryptionKey);
+        return new String(CryptoUtil.decryptUsingSecretKey(secretKey, dataValue.getBytes()));
+    }
 
     public String decryptUsingPrivateKey(String encodedAuthValue, String authType) {
         String encryptionKey = authTypeEncryptionKeyMap.get(authType);

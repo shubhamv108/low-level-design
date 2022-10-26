@@ -37,13 +37,13 @@ public class JWTUtils {
 
 
     public String generateAccessToken(String authenticationUser, String role, String utid, String jti,
-                                      Date expiration, String secret, String remoteAddr) {
+                                      Date expiration, String secret, String remoteAddress) {
 
         Map<String, Object> tokenHeaderClaim = new HashMap<>();
         tokenHeaderClaim.put(JWTUtils._UT_ID_Key, utid);
-        tokenHeaderClaim.put("role", role);
-        if (StringUtils.isNotEmpty(remoteAddr)) {
-            tokenHeaderClaim.put("remoteAddr", remoteAddr);
+//        tokenHeaderClaim.put("role", role);
+        if (StringUtils.isNotEmpty(remoteAddress)) {
+            tokenHeaderClaim.put("remoteAddress", remoteAddress);
         }
 
         return Jwts.builder()
@@ -66,36 +66,6 @@ public class JWTUtils {
             e.printStackTrace();
         }
         return claims;
-    }
-
-    public Date generateExpirationDate(Calendar currentTimeMillis) {
-        Integer sessionTimeout    = this.securityProperties.getSessionTimeout();
-        String sessionTimeoutType = this.securityProperties.getSessionTimeoutType();
-
-        switch(SessionTimeoutType.valueOf(sessionTimeoutType)) {
-            case YEAR:
-                currentTimeMillis.add(Calendar.YEAR, sessionTimeout);
-                break;
-            case MONTH:
-                currentTimeMillis.add(Calendar.MONTH, sessionTimeout);
-                break;
-            case WEEK:
-                currentTimeMillis.add(Calendar.WEEK_OF_MONTH, sessionTimeout);
-                break;
-            case DAY:
-                currentTimeMillis.add(Calendar.DAY_OF_MONTH, sessionTimeout);
-                break;
-            case HOUR:
-                currentTimeMillis.add(Calendar.HOUR, sessionTimeout);
-                break;
-            case MINUTE:
-                currentTimeMillis.add(Calendar.MINUTE, sessionTimeout);
-                break;
-            case SECOND:
-                currentTimeMillis.add(Calendar.SECOND, sessionTimeout);
-                break;
-        }
-        return currentTimeMillis.getTime();
     }
 
     public boolean validateExpirationDate(Claims claims) {
