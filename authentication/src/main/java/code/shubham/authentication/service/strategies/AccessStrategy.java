@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
 
-public interface AccessTokenStrategy {
+public interface AccessStrategy {
 
     Login.Response prepareLoginResponse(UserAccount userAccount, Date expirationDate);
 

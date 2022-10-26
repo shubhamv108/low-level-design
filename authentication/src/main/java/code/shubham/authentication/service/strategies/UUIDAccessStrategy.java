@@ -19,8 +19,8 @@ import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
-@Component("UUIDAccessTokenStrategy")
-public class UUIDAccessTokenStrategy implements AccessTokenStrategy {
+@Component("UUIDAccessStrategy")
+public class UUIDAccessStrategy implements AccessStrategy {
 
     private final SessionService sessionService;
     private final AccessTokenUtil accessTokenUtil;
@@ -32,10 +32,10 @@ public class UUIDAccessTokenStrategy implements AccessTokenStrategy {
     public static final Integer UNIQUE_SESSION_KEY_GENERATION_ATTEMPTS = 3;
 
     @Autowired
-    public UUIDAccessTokenStrategy(final SessionService sessionService,
-                                   final AccessTokenUtil accessTokenUtil,
-                                   final SecurityProperties securityProperties,
-                                   final AccountService accountService) {
+    public UUIDAccessStrategy(final SessionService sessionService,
+                              final AccessTokenUtil accessTokenUtil,
+                              final SecurityProperties securityProperties,
+                              final AccountService accountService) {
         this.sessionService = sessionService;
         this.accessTokenUtil = accessTokenUtil;
         this.securityProperties = securityProperties;

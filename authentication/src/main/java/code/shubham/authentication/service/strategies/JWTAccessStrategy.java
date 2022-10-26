@@ -26,8 +26,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@Component("JWTAccessTokenStrategy")
-public class JWTAccessTokenStrategy implements AccessTokenStrategy {
+@Component("JWTAccessStrategy")
+public class JWTAccessStrategy implements AccessStrategy {
 
     private final JWTUtils jwtUtils;
     private final SecurityProperties securityProperties;
@@ -39,11 +39,11 @@ public class JWTAccessTokenStrategy implements AccessTokenStrategy {
     private final AccountService accountService;
 
     @Autowired
-    public JWTAccessTokenStrategy(final JWTUtils jwtUtils,
-                                  final SecurityProperties securityProperties,
-                                  final AccessTokenUtil accessTokenUtil,
-                                  final BlacklistTokenService blacklistTokenService,
-                                  final AccountService accountService) {
+    public JWTAccessStrategy(final JWTUtils jwtUtils,
+                             final SecurityProperties securityProperties,
+                             final AccessTokenUtil accessTokenUtil,
+                             final BlacklistTokenService blacklistTokenService,
+                             final AccountService accountService) {
         this.jwtUtils = jwtUtils;
         this.securityProperties = securityProperties;
         this.accessTokenUtil = accessTokenUtil;

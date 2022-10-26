@@ -1,6 +1,6 @@
 package code.shubham.authentication.filters;
 
-import code.shubham.authentication.service.strategies.JWTAccessTokenStrategy;
+import code.shubham.authentication.service.strategies.JWTAccessStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,10 +18,10 @@ import java.io.IOException;
 //@Order(5)
 public class JWTAuthenticationFilter implements Filter {
 
-    private final JWTAccessTokenStrategy accessTokenStrategy;
+    private final JWTAccessStrategy accessTokenStrategy;
 
     @Autowired
-    public JWTAuthenticationFilter(final JWTAccessTokenStrategy accessTokenStrategy) {
+    public JWTAuthenticationFilter(final JWTAccessStrategy accessTokenStrategy) {
         this.accessTokenStrategy = accessTokenStrategy;
     }
 
