@@ -37,6 +37,7 @@ public class InvalidRequestException extends ClientException {
         return this;
     }
 
+    @SuppressWarnings("unchecked")
     public InvalidRequestException putErrorMessage(final String errorKey, final String errorMessage, String... params) {
         return putErrorMessage(errorKey, String.format(errorMessage, params));
     }

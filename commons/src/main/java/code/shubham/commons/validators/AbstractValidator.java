@@ -15,6 +15,7 @@ public abstract class AbstractValidator<OBJECT> implements IValidator<OBJECT> {
         this.messages = new LinkedHashMap<>();
     }
 
+    @SuppressWarnings("all")
     protected boolean putMessage(final String messageKey, final String messageValueFormat) {
         return this.putMessage(messageKey, messageValueFormat, null);
     }

@@ -30,7 +30,7 @@ public class EscrowAgreement extends BaseAbstractAuditableEntity {
 
     private String signatureToken; // ttl for 15 mins
     private Date signatureValidTill;
-    private String paymentOrderId;
+    private String paymentOrderId; // move to seperate table
     private boolean isFullFilled;
     private boolean isFundSettled;
     private boolean isAgreementClosed;

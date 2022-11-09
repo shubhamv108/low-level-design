@@ -1,0 +1,22 @@
+rootProject.name = 'rate-limit-rules'
+
+include 'commons'
+project(':commons').projectDir = file('../commons')
+
+include 'common-models'
+project(':common-models').projectDir = file('../common-models')
+
+include 'common-client'
+project(':common-client').projectDir = file('../common-client')
+
+include 'common-exceptions'
+project(':common-exceptions').projectDir = file('../common-exceptions')
+
+include 'common-cache'
+project(':common-cache').projectDir = file('../common-cache')
+
+include 'lib-rate-limit-rules'
+project(':lib-rate-limit-rules').projectDir = file('../lib-rate-limit-rules')
+
+include 'rate-limit-rules-models'
+project(':rate-limit-rules-models').projectDir = file('../rate-limit-rules-models')

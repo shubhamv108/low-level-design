@@ -1,0 +1,4 @@
+rootProject.name = 'rate-limit-rules-models'
+
+include 'common-models'
+project(':common-models').projectDir = file('../common-models')

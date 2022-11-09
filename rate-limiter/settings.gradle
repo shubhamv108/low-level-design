@@ -1,0 +1,29 @@
+rootProject.name = 'rate-limiter'
+
+include 'commons'
+project(':commons').projectDir = file('../commons')
+
+include 'common-models'
+project(':common-models').projectDir = file('../common-models')
+
+include 'common-client'
+project(':common-client').projectDir = file('../common-client')
+
+
+include 'common-exceptions'
+project(':common-exceptions').projectDir = file('../common-exceptions')
+
+include 'common-cache'
+project(':common-cache').projectDir = file('../common-cache')
+
+include 'rate-limit-rules-models'
+project(':rate-limit-rules-models').projectDir = file('../rate-limit-rules-models')
+
+include 'rate-limit-rules-client'
+project(':rate-limit-rules-client').projectDir = file('../rate-limit-rules-client')
+
+include 'lib-rate-limit-rules'
+project(':lib-rate-limit-rules').projectDir = file('../lib-rate-limit-rules')
+
+include 'lib-util-jedis'
+project(':lib-util-jedis').projectDir = file('../lib-util-jedis')

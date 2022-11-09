@@ -40,6 +40,7 @@ public abstract class BaseAbstractAuditableEntity implements Serializable {
 
     private static final long serialVersionUID = 8953324502234883513L;
 
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

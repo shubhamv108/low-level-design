@@ -3,6 +3,7 @@ package code.shubham.commons.exceptions;
 import code.shubham.common.exceptions.AuthorizationClientException;
 import code.shubham.common.exceptions.BlobStoreException;
 import code.shubham.common.exceptions.InvalidRequestException;
+import code.shubham.common.exceptions.ServiceInvocationClientException;
 import code.shubham.commons.util.ResponseUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -50,5 +51,12 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
             InvalidRequestException exception, WebRequest request) {
         return ResponseUtils.getErrorResponseEntity(
                 HttpStatus.BAD_REQUEST.value(), exception.getOriginalErrors());
+    }
+
+    @ExceptionHandler({ ServiceInvocationClientException.class })
+    public ResponseEntity<?> handleServiceInvocationClientException(
+            InvalidRequestException exception, WebRequest request) {
+        return ResponseUtils.getErrorResponseEntity(
+                HttpStatus.SERVICE_UNAVAILABLE.value(), exception.getOriginalErrors());
     }
 }

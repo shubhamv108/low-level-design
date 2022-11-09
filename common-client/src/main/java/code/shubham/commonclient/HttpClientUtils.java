@@ -47,7 +47,7 @@ public class HttpClientUtils {
             throw new InternalServerError();
         ServiceResponse serviceResponse = JsonUtils.deserialize(response.body(), ServiceResponse.class);
         if (serviceResponse == null)
-            throw new ServiceInvocationClientException("Noresponse");
+            throw new ServiceInvocationClientException("NoResponse");
         if (serviceResponse.getStatusCode() > 399 && serviceResponse.getStatusCode() < 500)
             new InvalidRequestException((Map<String, Collection<String>>) serviceResponse.getError());
         if (serviceResponse.getStatusCode() > 500)
@@ -66,8 +66,9 @@ public class HttpClientUtils {
         URI uri = this.getURI(uriPath);
         HttpRequest.Builder builder = HttpRequest.newBuilder().
                 timeout(Duration.of(10, SECONDS)).
-                uri(uri).
-                headers(headers);
+                uri(uri);
+        if (headers != null && headers.length > 0)
+            builder.headers(headers);
         if (body != null)
             builder.method(method, HttpRequest.BodyPublishers.ofString(body));
         return builder.build();
