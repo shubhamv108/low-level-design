@@ -15,6 +15,9 @@ project(':common-exceptions').projectDir = file('../common-exceptions')
 include 'common-cache'
 project(':common-cache').projectDir = file('../common-cache')
 
+include 'common-utils'
+project(':common-utils').projectDir = file('../common-utils')
+
 include 'lib-rate-limit-rules'
 project(':lib-rate-limit-rules').projectDir = file('../lib-rate-limit-rules')
 

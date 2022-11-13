@@ -15,5 +15,8 @@ project(':common-exceptions').projectDir = file('../common-exceptions')
 include 'common-cache'
 project(':common-cache').projectDir = file('../common-cache')
 
+include 'common-utils'
+project(':common-utils').projectDir = file('../common-utils')
+
 include 'rate-limit-rules-models'
 project(':rate-limit-rules-models').projectDir = file('../rate-limit-rules-models')

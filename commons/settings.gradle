@@ -2,5 +2,9 @@ rootProject.name = 'commons'
 
 include 'common-exceptions'
 project(':common-exceptions').projectDir = file('../common-exceptions')
+
 include 'common-models'
 project(':common-models').projectDir = file('../common-models')
+
+include 'common-utils'
+project(':common-utils').projectDir = file('../common-utils')

@@ -9,6 +9,9 @@ project(':common-models').projectDir = file('../common-models')
 include 'common-client'
 project(':common-client').projectDir = file('../common-client')
 
+include 'common-utils'
+project(':common-utils').projectDir = file('../common-utils')
+
 
 include 'common-exceptions'
 project(':common-exceptions').projectDir = file('../common-exceptions')
