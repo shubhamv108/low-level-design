@@ -1,5 +1,8 @@
 rootProject.name = 'tiny-url'
 
+include 'common-utils'
+project(':common-utils').projectDir = file('../common-utils')
+
 include 'commons'
 project(':commons').projectDir = file('../commons')
 

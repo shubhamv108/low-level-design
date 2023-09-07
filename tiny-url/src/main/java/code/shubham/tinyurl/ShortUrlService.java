@@ -18,9 +18,10 @@ public class ShortUrlService {
     private static final int DEFAULT_SHORT_URL_LENGTH = 7;
 
     @Autowired
-    public ShortUrlService(final ShortUrlRepository repository,
-                           @Qualifier("ShortUrlGenerateStrategy") final IShortUrlGenerateStrategy shortUrlGenerateStrategy,
-                           @Qualifier("RandomCharacterShortUrlGenerateStrategy") final IShortUrlGenerateStrategy randomCharacterShortUrlGenerateStrategy) {
+    public ShortUrlService(
+            final ShortUrlRepository repository,
+            @Qualifier("ShortUrlGenerateStrategy") final IShortUrlGenerateStrategy shortUrlGenerateStrategy,
+            @Qualifier("RandomCharacterShortUrlGenerateStrategy") final IShortUrlGenerateStrategy randomCharacterShortUrlGenerateStrategy) {
         this.repository = repository;
         this.shortUrlGenerateStrategy = shortUrlGenerateStrategy;
         this.randomCharacterShortUrlGenerateStrategy = randomCharacterShortUrlGenerateStrategy;

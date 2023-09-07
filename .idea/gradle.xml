@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/authorization-models" />
+        <option name="gradleJvm" value="corretto-18" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/authorization-models" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/common-cache" />
+        <option name="gradleJvm" value="corretto-18" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/common-cache" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/common-client" />
+        <option name="gradleJvm" value="corretto-18" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/common-client" />
+            <option value="$PROJECT_DIR$/common-exceptions" />
+            <option value="$PROJECT_DIR$/common-models" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/common-exceptions" />
+        <option name="gradleJvm" value="corretto-18" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/common-exceptions" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/common-models" />
+        <option name="gradleJvm" value="corretto-18" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/common-models" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/common-utils" />
+        <option name="gradleJvm" value="corretto-18" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/common-utils" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/commons" />
+        <option name="gradleJvm" value="corretto-18" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/common-exceptions" />
+            <option value="$PROJECT_DIR$/common-models" />
+            <option value="$PROJECT_DIR$/common-utils" />
+            <option value="$PROJECT_DIR$/commons" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/key-generation" />
+        <option name="gradleJvm" value="corretto-18" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/key-generation" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/key-generation-client" />
+        <option name="gradleJvm" value="corretto-18" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/common-client" />
+            <option value="$PROJECT_DIR$/common-exceptions" />
+            <option value="$PROJECT_DIR$/common-models" />
+            <option value="$PROJECT_DIR$/key-generation-client" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/tiny-url" />
+        <option name="gradleJvm" value="corretto-18" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/authorization-models" />
+            <option value="$PROJECT_DIR$/common-client" />
+            <option value="$PROJECT_DIR$/common-exceptions" />
+            <option value="$PROJECT_DIR$/common-models" />
+            <option value="$PROJECT_DIR$/common-utils" />
+            <option value="$PROJECT_DIR$/commons" />
+            <option value="$PROJECT_DIR$/key-generation-client" />
+            <option value="$PROJECT_DIR$/tiny-url" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
