@@ -91,7 +91,7 @@ rm-images: clean
 
 docker-build:
 	docker build -t shubham01/server-sent-events:latest .
-	docker build -t shubham01/sse-fluentbit:latest fluentbit
+	#docker build -t shubham01/sse-fluentbit:latest fluentbit
 
 build: clean build-local docker-build
 
